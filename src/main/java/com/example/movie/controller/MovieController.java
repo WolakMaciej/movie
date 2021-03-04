@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 public class MovieController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class MovieController {
         return new ResponseEntity<>(presistedMovie,HttpStatus.CREATED);
     }
 
-    @GetMapping()
+    @GetMapping("/all")
     public ResponseEntity<List<Movie>>getMovies(){
         List<Movie>movies=movieService.getAllMovies();
         if (CollectionUtils.isEmpty(movies)){

@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.theameleaf.org"  lang="pl">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movie</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Movie</h1>
+        </div>
+    </div>
+</section>
+
+
+<section class="container">
+    <div class="row">
+
+        <div class="col-md-5">
+            <h3 th:text="${movie.name}"></h3>
+            <p th:text="${movie.description}"></p>
+                <a href="#" class="btn btn-warning btn-large">
+                    Zamów teraz
+                </a>
+                <a href="/movies" class="btn btn-success">
+                    powrót
+                </a>
+
+            </p>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

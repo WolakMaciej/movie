@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.theameleaf.org"  lang="pl">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movies</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Movies</h1>
+            <p>All movies</p>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="row">
+        <c th:each="movie : ${movies}">
+            <div class="col-sm-6 col-md-3" style="padding-bottom: 15px">
+                <div class="card" style="width:400px">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="${movie.name}"></h3>
+                        <p class="card-text" th:text="${movie.description}"></p>
+                        <p>
+                            <a  th:href="@{/movies/movie(id=${movie.id})}"
+                                class="btn btn-primary">Szczegóły
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </c>
+    </div>
+</section>
+</body>
+</html>
