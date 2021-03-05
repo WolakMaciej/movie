@@ -7,37 +7,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Service
 @Transactional
 public class MovieServiceImpl implements MovieService {
-    @Autowired
-    MovieRepository movieRepository;
+
+    private Map<Long, Movie> database = new HashMap<>();
+
+    {
+        IntStream.range(0, 10)
+                .forEach(i -> {
+                    Movie movie = new Movie();
+                    movie.setName("Name " + i);
+                    movie.setDescription("Description " + i);
+                    createNewMovie(movie);
+                });
+    }
 
     @Override
     public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+        return new ArrayList<>(database.values());
     }
 
     @Override
     public Movie createNewMovie(Movie movie) {
-        return movieRepository.save(movie);
+        return movie;
     }
 
     @Override
-    public Movie getMovie(long id) {
-        return movieRepository.findById(id).orElse(null);
+    public Movie getMovieById(long id) {
+        return database.get(id);
     }
 
     @Override
     public void deleteMovie(long id) {
-        movieRepository.deleteById(id);
+        database.remove(id);
 
     }
 
+
     @Override
     public void updateMovie(Movie movie) {
-        movieRepository.save(movie);
+        Movie existing = getMovieById(movie.getId());
+        existing.setName(movie.getName());
+        existing.setDescription(movie.getDescription());
+        database.put(existing.getId(), existing);
     }
 
 

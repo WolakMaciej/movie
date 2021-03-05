@@ -5,8 +5,11 @@ import com.example.movie.domain.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
+
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
@@ -18,7 +21,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Movie> createNewMovie(@Valid @RequestBody Movie movie){
         Movie presistedMovie = movieService.createNewMovie(movie);
         return new ResponseEntity<>(presistedMovie,HttpStatus.CREATED);
@@ -34,14 +37,21 @@ public class MovieController {
     }
 
 
-    @GetMapping("{id}")
+/*    @GetMapping("{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable long id){
         Movie movie = movieService.getMovie(id);
         return new ResponseEntity<>(movie,HttpStatus.OK);
-    }
+    }*/
+
+@GetMapping ("/movie")
+public String getMovie(Model model, @RequestParam("id") long id) {
+    Movie movie = movieService.getMovieById(id);
+    model.addAttribute("movie", movie);
+    return "movie";
+}
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Movie>deleteMovie(@PathVariable long id){
         movieService.deleteMovie(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -49,7 +59,7 @@ public class MovieController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Movie>updateMovie(@PathVariable long id,@RequestBody Movie movie){
-        Movie newMovie = movieService.getMovie(id);
+        Movie newMovie = movieService.getMovieById(id);
         newMovie.setName(movie.getName());
         newMovie.setDescription(movie.getDescription());
         movieService.updateMovie(newMovie);
